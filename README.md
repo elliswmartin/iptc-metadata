@@ -47,6 +47,8 @@ Images will now be processed. Terminal output will provide updates about process
 ### A Few Notes on IPTC Metadata 
 As written, metadata will be stored in the `keywords` and `country` IPTC fields. To view the metadata, locate those assigned fields in a viewer such as Adobe Bridge. For example: 
 
+<img width="822" alt="metadata-example" src="https://github.com/elliswmartin/iptc-metadata/assets/54450015/673cf01f-8c35-4284-a750-66c1e693c1a3">
+
 Consult the [IPTC Photo Metadata User Guide](https://www.iptc.org/std/photometadata/documentation/userguide/) and IPTCInfo3 documentation to map to different fields.  
 
 
