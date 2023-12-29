@@ -18,6 +18,7 @@ The files are matched to the csv by the `work ID`, which is the unique identifie
 
 ### Functions
 This script has 3 functions: 
+
 **load_csv_data(csv_path)**: Loads csv data into dictionary for easy access. Returns: csv header (list of str), csv data (dict). 
 
 **add_iptc_metadata(image_path, metadata)**: Extracts requested metadata and saves to image file.
