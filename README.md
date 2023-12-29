@@ -44,7 +44,7 @@ This code runs when the script is being run as the main program (not imported as
 
 Images will now be processed. Terminal output will provide updates about processing status and/or error messages if issues exist. 
 
-### A Few Notes on IPTC Metadata 
+### Notes on IPTC Metadata 
 As written, metadata will be stored in the `keywords` and `country` IPTC fields. To view the metadata, locate those assigned fields in a viewer such as Adobe Bridge. For example: 
 
 <img width="1118" alt="metadata-example" src="https://github.com/elliswmartin/iptc-metadata/assets/54450015/c13d44d8-7aca-4bd1-b5b9-41a2a9713ef5">
