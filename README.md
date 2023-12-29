@@ -15,16 +15,17 @@ This is a python script to add csv metadata to JPG files for easier access. The 
 These are all being dumped into the `keywords` IPTC field as it is an easy non-hierarchical, non-controlled vocab field. The one exception is `location: creation` which is split and the country is also added to the `country` IPTC field. The script also acknowledges blank fields in the csv (e.g. `[no title]`).
 
 ## Usage (Mac) 
-1. Separate images to process into their own directory.
-2. Run the following command in terminal:
+1. Download most recent version of [IPTCInfo3](https://github.com/james-see/iptcinfo3/blob/master/iptcinfo3.py) directly from Github (not pypi) and store in appropriate folder. For example, I use anaconda so replaced the previous iptcinfo3.py file in `anaconda3/lib/python3.11/site-packages/iptcinfo3.py` with the version linked above.   
+3. Separate images to process into their own directory.
+4. Run the following command in terminal:
 
        $ python3 path/to/iptc_metadata.py
 
-3. When prompted, drag the **folder** of images to be processed into terminal to copy the path and press `return`.
+5. When prompted, drag the **folder** of images to be processed into terminal to copy the path and press `return`.
 
         Add images folder path: /path/to/images/to/be/processed/
 
-4. When prompted, drag the corresponding metadata **csv file** into terminal to copy the path and press `return`.
+6. When prompted, drag the corresponding metadata **csv file** into terminal to copy the path and press `return`.
 
          Add CSV file path: /path/to/metadata.csv
 
