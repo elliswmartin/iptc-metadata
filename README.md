@@ -29,4 +29,4 @@ These are all being dumped into the `keywords` IPTC field as it is an easy non-h
 
          Add CSV file path: /path/to/metadata.csv
 
-Images will now beging to process. Terminal output will provide updates about processing status and/or error messages if issues exist. 
+Images will now begin to process. Terminal output will provide updates about processing status and/or error messages if issues exist. 
