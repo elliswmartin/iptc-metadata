@@ -85,7 +85,7 @@ DRIVER
 '''
 if __name__ == "__main__":
     # User input for folder of images to process
-    images_dir = os.path.normpath(input("Add image file directory: ").strip().replace("\\", " ")) #.replace("/", "\\"))
+    images_dir = os.path.normpath(input("Add images folder path: ").strip().replace("\\", " ")) #.replace("/", "\\"))
 
     if not os.path.isdir(images_dir):
         raise FileNotFoundError("Invalid directory")
