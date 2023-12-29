@@ -5,7 +5,18 @@ from iptcinfo3 import IPTCInfo
 ''' 
 FUNCTIONS
 '''
-# Add metadata to image file
+# Load csv data into dictionary for easy access
+def load_csv_data(csv_path):
+    csv_data = {}
+    with open(csv_path, newline='') as csv_file:
+        reader = csv.reader(csv_file)
+        header = next(reader)
+        for row in reader:
+            work_id = row[header.index('work: id')]
+            csv_data[work_id] = row
+    return header, csv_data
+
+# Extract requested metadata and save to image file
 def add_iptc_metadata(image_path, metadata):
     try:
         # Open the image with iptcinfo3
@@ -43,17 +54,6 @@ def add_iptc_metadata(image_path, metadata):
 
     except Exception as e:
         print(f"Error adding IPTC metadata to {image_path}: {e}")
-
-# Load csv data into dictionary for easy access
-def load_csv_data(csv_path):
-    csv_data = {}
-    with open(csv_path, newline='') as csv_file:
-        reader = csv.reader(csv_file)
-        header = next(reader)
-        for row in reader:
-            work_id = row[header.index('work: id')]
-            csv_data[work_id] = row
-    return header, csv_data
 
 # Process each row of csv based on images in directory
 def process_csv_row(work_id, images_dir, header):
