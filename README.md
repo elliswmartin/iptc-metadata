@@ -19,11 +19,11 @@ The files are matched to the csv by the `work ID`, which is the unique identifie
 ### Functions
 This script has 3 functions: 
 
-**load_csv_data(csv_path)**: Loads csv data into dictionary for easy access. Returns: csv header (list of str), csv data (dict). 
+**load_csv_data**(csv_path): Loads csv data into dictionary for easy access. Returns: csv header (list of str), csv data (dict). 
 
-**add_iptc_metadata(image_path, metadata)**: Extracts requested metadata and saves to image file.
+**add_iptc_metadata**(image_path, metadata): Extracts requested metadata and saves to image file.
 
-**process_csv_row(work_id, images_dir, header)**: Processes each row of csv that matches images in directory by calling `add_iptc_metadata()`. 
+**process_csv_row**(work_id, images_dir, header): Processes each row of csv that matches images in directory by calling `add_iptc_metadata()`. 
 
 ### Driver
 This code runs when the script is being run as the main program (not imported as module). It prompts the user to input the path of a folder containing images and the csv file path, handling potential issues such as trailing/leading spaces, backslashes and spaces. For each work_id in the csv data, it identifies matching image files based on the work ID and calls `process_csv_row()`
