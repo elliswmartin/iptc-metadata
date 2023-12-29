@@ -26,7 +26,7 @@ This script has 3 functions:
 **process_csv_row**(work_id, images_dir, header): Processes each row of csv that matches images in directory by calling `add_iptc_metadata()`. 
 
 ### Driver
-This code runs when the script is being run as the main program (not imported as module). It prompts the user to input the path of a folder containing images and the csv file path, handling potential issues such as trailing/leading spaces, backslashes and spaces. For each work_id in the csv data, it identifies matching image files based on the work ID and calls `process_csv_row()`
+This code runs when the script is being run as the main program (not imported as module). It prompts the user to input the path of a folder containing images and the csv file path, handling potential issues such as trailing/leading spaces, backslashes and spaces. The csv is imported using `load_csv_data()`. For each work_id in the csv data, it identifies matching image files based on the work ID and calls `process_csv_row()`.
 
 ## Usage (Mac) 
 1. Download most recent version of [IPTCInfo3](https://github.com/james-see/iptcinfo3/blob/master/iptcinfo3.py) directly from Github (not pypi) and store in appropriate folder. For example, I use anaconda so replaced the previous `iptcinfo3.py` file in `anaconda3/lib/python3.11/site-packages/iptcinfo3.py` with the version linked above.   
