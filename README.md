@@ -29,21 +29,55 @@ This script has 3 functions:
 This code runs when the script is being run as the main program (not imported as module). It prompts the user to input the path of a folder containing images and the csv file path, handling potential issues such as trailing/leading spaces, backslashes and spaces. The csv is imported using `load_csv_data()`. For each work_id in the csv data, it identifies matching image files based on the work ID and calls `process_csv_row()`.
 
 ## Usage (Mac) 
-1. Download most recent version of [IPTCInfo3](https://github.com/james-see/iptcinfo3/blob/master/iptcinfo3.py) directly from Github (not pypi) and store in appropriate folder. For example, I use anaconda so replaced the previous `iptcinfo3.py` file in `anaconda3/lib/python3.11/site-packages/iptcinfo3.py` with the version linked above.   
-3. Separate images to process into their own directory.
-4. Run the following command in terminal:
+0. Clone script folder to wherever you store your scripts locally by running the following command in terminal: 
+
+       $ git clone https://github.com/elliswmartin/iptc-metadata
+ 
+1. Download most recent version of [IPTCInfo3](https://github.com/james-see/iptcinfo3/blob/master/iptcinfo3.py) directly from Github (not pypi) and store it wherever your python libraries are stored locally. If you are unfamiliar with this process or unsure where your python libraries are stored locally, see the [IPTCInfo3 Install Help](#iptcinfo3-install-help) subsection below.  
+2. Separate images to process into their own directory.
+3. Run the following command in terminal:
 
        $ python3 path/to/iptc_metadata.py
 
-5. When prompted, drag the **folder** of images to be processed into terminal to copy the path and press `return`.
+4. When prompted, drag the **folder** of images to be processed into terminal to copy the path and press `return`.
 
         Add images folder path: /path/to/images/to/be/processed/
 
-6. When prompted, drag the corresponding metadata **csv file** into terminal to copy the path and press `return`.
+5. When prompted, drag the corresponding metadata **csv file** into terminal to copy the path and press `return`.
 
          Add CSV file path: /path/to/metadata.csv
 
 Images will now be processed. Terminal output will provide updates about processing status and/or error messages if issues exist. 
+
+### IPTCInfo3 Install Help
+If you are unsure where python libraries are stored locally, I suggest installing the IPTCInfo3 library using pip, locating that file and replacing the file with the most recent version of the script. 
+
+1. Run the following command in terminal to install IPTCInfo3 via [PyPi](https://pypi.org/project/IPTCInfo3/):
+
+       $ pip install IPTCInfo3
+
+2. Locate the newly installed IPTCInfo3 library by running the following command in terminal:
+
+       $ python3 -m pip show iptcinfo3
+
+3. From the terminal output, copy the `Location: ` file path. For example, `/opt/homebrew/lib/python3.9/site-packages` from the following output:
+
+       Name: IPTCInfo3
+       Version: ...
+       Summary: ...
+       Home-page: ...
+       Author: ...
+       Author-email: ...
+       License: ...
+       Location: /opt/homebrew/lib/python3.9/site-packages
+
+4. In Finder's `Go` Menu, select `Go To Folder` and paste the copied location. 
+
+
+
+5. Download the most recent version of the [IPTCInfo3 script](https://github.com/james-see/iptcinfo3/blob/master/iptcinfo3.py) directly via Github.
+
+6. Replace the original IPTCInfo3.py file downloaded via PyPi with file you just downloaded directly from Github. Return to [Usage](#usage) Step 2 to continue. 
 
 ### Notes on IPTC Metadata 
 As written, metadata will be stored in the `keywords` and `country` IPTC fields. To view the metadata, locate those assigned fields in a viewer such as Adobe CC apps or ExifTool. For example, this is how the metadata appears in Bridge: 
