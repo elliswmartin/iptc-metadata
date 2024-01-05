@@ -73,11 +73,11 @@ If you are unsure where python libraries are stored locally, I suggest installin
 
 4. In Finder's `Go` Menu, select `Go To Folder` and paste the copied location. 
 
-
+<img width="462" alt="Screen Shot 2024-01-05 at 3 33 24 PM" src="https://github.com/elliswmartin/iptc-metadata/assets/54450015/fc316578-615b-42de-af23-5e2b435a90e5">
 
 5. Download the most recent version of the [IPTCInfo3 script](https://github.com/james-see/iptcinfo3/blob/master/iptcinfo3.py) directly via Github.
 
-6. Replace the original IPTCInfo3.py file downloaded via PyPi with file you just downloaded directly from Github. Return to [Usage](#usage) Step 2 to continue. 
+6. Replace the original IPTCInfo3.py file downloaded via PyPi with file you just downloaded directly from Github. Return to Usage Step 2 to continue. 
 
 ### Notes on IPTC Metadata 
 As written, metadata will be stored in the `keywords` and `country` IPTC fields. To view the metadata, locate those assigned fields in a viewer such as Adobe CC apps or ExifTool. For example, this is how the metadata appears in Bridge: 
