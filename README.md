@@ -9,7 +9,8 @@ This is a python script to add csv metadata to JPG files for easier access. The 
 | Title | Document Title | 
 | Date or EarliestDate | Headline | 
 | Description | Description | 
-| Measurements | Description Writer |
+| Measurements (cm) | Description Writer |
+| Measurements (in) | Instructions | 
 | Agent: Name: Person | Creator |
 | Agent: Name: Org  | Creator: Job Title |
 | City | City |
