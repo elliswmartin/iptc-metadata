@@ -1,20 +1,28 @@
 # IPTC metadata
-Add metadata to JPGs using IPTCInfo3. Created to support image processing at Letterform Archive in San Francisco, CA. 
+Add metadata to JPGs using IPTCInfo3. Created to support image processing at Letterform Archive (LfA) in San Francisco, CA. 
 
 ## How It Works
-This is a python script to add csv metadata to JPG files for easier access. The fields pulled from csv sheets are:
+This is a python script to add csv metadata to JPG files for easier access. The fields pulled from LfA csv sheets are mapped onto IPTC fields, which appear with different names in various photo viewer applications (see [Notes on IPTC Metadata](#notes-on-iptc-metadata) for more). The following is the particular implementation as it appears in the Adobe Bridge IPTC (IIM, legacy) metadata section. 
 
-- title
-- date
-- earliestDate
-- agent: name: person
-- agent: name: organization
-- measurements
-- location: creation
+| LfA field | Bridge field |
+| ------------- | ------------- |
+| Title | Document Title | 
+| Date or EarliestDate | Headline | 
+| Description | Description | 
+| Measurements | Description Writer |
+| Agent: Name: Person | Creator |
+| Agent: Name: Org  | Creator: Job Title |
+| City | City |
+| State/Providence | State/Providence | 
+| Country | Country | 
+| Material & Technique | Transmission Reference | 
+| ~ open ~ | Credit | 
+| ~ open ~ | Source |
+| ~ open ~ | Copyright | 
 
-These are all being dumped into the `keywords` IPTC field as it is an easy non-hierarchical, non-controlled vocab field. The one exception is `location: creation` which is split and the country is also added to the `country` IPTC field. The script also acknowledges blank fields in the csv (e.g. `[no title]`).
+The script also acknowledges blank fields in the csv (e.g. `[no title]`).
 
-The files are matched to the csv by the `work ID`, which is the unique identifier assigned to the object by Letterform Archive. It is in the format: `lfa_collectionName_XXXX`, where the X's are digits. The corresponding image files are `lfa_collectionName_XXXX_XXX`, where the last 3 digits count the image number per object. For example, the last image of an object that has 4-sides would be `lfa_collectionName_XXXX_004`. Any unique identifier can be substituted. 
+The image files are matched to the csv by the `work ID`, which is the unique identifier assigned to the object by Letterform Archive. It is in the format: `lfa_collectionName_XXXX`, where the X's are digits. The corresponding image files are `lfa_collectionName_XXXX_XXX`, where the last 3 digits count the image number per object. For example, the last image of an object that has 4-sides would be `lfa_collectionName_XXXX_004`. Any unique identifier can be substituted. 
 
 ### Functions
 This script has 3 functions: 
@@ -80,10 +88,10 @@ If you are unsure where python libraries are stored locally, I suggest installin
 6. Replace the original IPTCInfo3.py file downloaded via PyPi with file you just downloaded directly from Github. Return to Usage Step 2 to continue. 
 
 ### Notes on IPTC Metadata 
-As written, metadata will be stored in the `keywords` and `country` IPTC fields. To view the metadata, locate those assigned fields in a viewer such as Adobe CC apps or ExifTool. For example, this is how the metadata appears in Bridge: 
+As written, metadata will be stored in the `keywords` and `country` IPTC fields. To view the metadata, locate those assigned fields in a viewer such as Adobe CC apps or ExifTool. For example, this is how the metadata appears in [Bridge](https://helpx.adobe.com/bridge/using/metadata-adobe-bridge.html): 
 
 <img width="1118" alt="metadata-example" src="https://github.com/elliswmartin/iptc-metadata/assets/54450015/c13d44d8-7aca-4bd1-b5b9-41a2a9713ef5">
 
-Consult the [IPTC Photo Metadata User Guide](https://www.iptc.org/std/photometadata/documentation/userguide/) and IPTCInfo3 documentation to map to different fields.  
+Consult the [IPTC Photo Metadata User Guide](https://www.iptc.org/std/photometadata/documentation/userguide/) and IPTCInfo3 documentation to map to different fields. 
 
 
