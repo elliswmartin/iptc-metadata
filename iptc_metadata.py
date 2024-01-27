@@ -1,16 +1,17 @@
-import os, csv
+import os, csv, re
 from iptcinfo3 import IPTCInfo
-from collections import Counter
+from prettytable import PrettyTable
 
 '''
 
 TODO: add error handling for space in folder name
 TODO: test long description behavior 
-TODO: test csv from google sheet w/ multiple sheets ??? 
+TODO: test csv from google sheets w/ multiple tabs 
 TODO: Improve brittleness so does not fail but instead reports errors and continues processing. 
 TODO: suppress char warning    https://stackoverflow.com/questions/50407738/python-disable-iptcinfo-warning
-TODO: success/fail Counter() at end 
-TODO: Update documentation once get through most/all of the above
+TODO: Update documentation once get through most/all of the above - which field mapped onto which 
+TODO: Add prettytable library install note on README
+TODO: Add note about where to find spreadsheets to slack message
 '''
 
 ''' 
@@ -28,7 +29,7 @@ Creator: Any info in Agent: name: person added to Author
 Creator: Any info in Agent: name: organization added to Author Title  
 Title: We don't currently have any workflow in place to note official (descriptive titles are handled the same as official)
 Vol/Issue: We catalog to include volume, issue, month, or other relevant periodical info in title if applicable & available. 
-Dims (in): Converts measurements in cm to in 
+Dims (in): Converts measurements in cm to inches 
 Medium: Added material and technique fields to Headline. 
 
 Questions: 
@@ -38,14 +39,13 @@ Do you want stylePeriod or workType?
 '''
 
 
-
 ''' 
 FUNCTIONS
 '''
 # Load csv data into dictionary for easy access
 def load_csv_data(csv_path):
     csv_data = {}
-    with open(csv_path, newline='') as csv_file:
+    with open(csv_path, newline='', encoding='utf-8') as csv_file:
         reader = csv.reader(csv_file)
         header = next(reader)
         for row in reader:
@@ -88,7 +88,7 @@ def add_iptc_metadata(image_path, metadata):
                 iptc_data['writer/editor']=dims_in or "[no dims]"
 
             # Add height x width dims(cm) to 'special instructions' IPTC = 'Instructions' Bridge
-            iptc_data['special instructions']= str(metadata.get("measurements")) or "[no Date]"
+            iptc_data['special instructions']= str(metadata.get("measurements")) or "[no Dims]"
 
             ## Add ______ to 'sublocation' IPTC = Sublocation' Bridge  
             # iptc_data['sub-location']='Sublocation'
@@ -121,10 +121,11 @@ def add_iptc_metadata(image_path, metadata):
             iptc_data.save(options=["overwrite"])
 
             print("IPTC metadata added successfully to", image_path)
+            success_list.append(image_path)
 
         else:
             print(f"No existing IPTC data found for {image_path}")
-
+            fail_list.append(image_path)
     except Exception as e:
         print(f"Error adding IPTC metadata to {image_path}: {e}")
 
@@ -157,6 +158,8 @@ def process_csv_row(work_id, images_dir, header):
 DRIVER
 '''
 if __name__ == "__main__":
+    # List for image files that fail
+    success_list = []
     # User input for folder of images to process
     images_dir = "/Users/ellis/Desktop/iptc_test"
     # TODO replace -> images_dir = os.path.normpath(input("Add images folder path: ").strip().replace("\\", " ")) #.replace("/", "\\"))
@@ -164,7 +167,11 @@ if __name__ == "__main__":
     if not os.path.isdir(images_dir):
         raise FileNotFoundError("Invalid image directory")
     
-    all_img_files = [os.path.join(images_dir, f) for f in os.listdir(images_dir) if f.lower().endswith(('.jpg', '.jpeg', '.tif', '.tiff'))]
+    # Check for file type and work_id format
+    work_id_pattern = re.compile(r"lfa_.*_\d{4}_\d{3}\..*")
+    poss_img_files = [os.path.join(images_dir, f) for f in os.listdir(images_dir) if f.lower().endswith(('.jpg', '.jpeg', '.tif', '.tiff'))]
+    all_img_files = [f for f in poss_img_files if work_id_pattern.match(os.path.basename(f))]
+ 
     unique_img_files = set(all_img_files)
 
     if not all_img_files:
@@ -176,19 +183,42 @@ if __name__ == "__main__":
 
     try:
         header, csv_data = load_csv_data(csv_path)
-
+        
         if not header:
             print("Empty CSV file")
             exit()
-
+        
         for work_id in csv_data:
-            matching_img_files = [f for f in unique_img_files if work_id.lower() in f]
+            matching_img_files = []
+            fail_list = []
+            # matching_img_files = [f for f in unique_img_files if work_id.lower() in f]
+            for file in unique_img_files:
+                if work_id.lower() in file.lower():
+                    matching_img_files.append(file)
+                else:
+                    fail_list.append(file)
 
-            if matching_img_files and work_id:
-                print(f"Processing CSV data for work ID: {work_id}")
+            if matching_img_files:
+                # print(f"Processing CSV data for work ID: {work_id}")
                 process_csv_row(work_id, images_dir, header)
   
     except csv.Error:
         print(f"File {csv_path} is not a valid CSV file")
         exit()
-print("Processing complete.")
+
+# TODO THIS IS NOT WORKING
+total_count = len(poss_img_files)
+ 
+table = PrettyTable(["Metric", "Count"])
+table.align["Metric"] = "l" 
+table.align["Count"] = "r"
+
+table.add_row(["Success", len(success_list)])
+table.add_row(["Failed", len(fail_list)])
+table.add_row(["Total", total_count])
+print(f"\n\nPROCESSING COMPLETE \n\n{table}\n")
+if fail_list:
+    print("\nFAILED:")
+    for f in fail_list:
+        print(f"{os.path.basename(f)}")
+    print("")
